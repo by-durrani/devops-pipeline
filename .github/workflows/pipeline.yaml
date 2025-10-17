@@ -1,0 +1,24 @@
+name: CI pipeline
+
+on: ## on will make a trigger event
+  push: ## push will be the event when push happens
+    branches: [main] ## on branch name in array we can put more branches in it or if we don't specify it will do for each branch existed
+
+jobs: ## it is a group of steps which work together or multiple things will goes on in sequence
+  build: ## name a job
+    runs-on: ubuntu-latest ## the OS we will specify because workflows will work on container
+
+    steps: ## specify the steps for job
+      - name: Checkout code ## name of the step
+        uses: actions/checkout@v5 ## what this step will be using a pre-build action
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
